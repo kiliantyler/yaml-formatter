@@ -1,0 +1,11 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "regexManagers": [
+    {
+      "fileMatch": ["^dependencies\\.json$"],
+      "matchStrings": ["\"yamlfmt_version\": \"(?<currentValue>.+)\""],
+      "datasource": "github-releases",
+      "depNameTemplate": "google/yamlfmt"
+    }
+  ]
+}

@@ -18,7 +18,8 @@
     "github>kiliantyler/kubernetes-yaml-formatter-x//.github/renovate/commitMessage.json5",
     "github>kiliantyler/kubernetes-yaml-formatter-x//.github/renovate/labels.json5",
     "github>kiliantyler/kubernetes-yaml-formatter-x//.github/renovate/semanticCommits.json5",
-    "github>kiliantyler/kubernetes-yaml-formatter-x//.github/renovate/customManagers.json5"
+    "github>kiliantyler/kubernetes-yaml-formatter-x//.github/renovate/customManagers.json5",
+    "github>kiliantyler/kubernetes-yaml-formatter-x//.github/renovate/regexManagers.json5",
   ],
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
   "suppressNotifications": ["prIgnoreNotification"],
