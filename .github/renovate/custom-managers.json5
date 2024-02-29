@@ -31,7 +31,7 @@
     },
     {
       "fileMatch": ["^dependencies\\.json$"],
-      "managerPath": ".github/renovate/dependencies-manager.json5"
+      "managerPath": ".github/renovate/dependencies-manager.js"
     }
   ],
 }
