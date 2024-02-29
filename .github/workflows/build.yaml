@@ -3,23 +3,33 @@ name: Build yamlfmt from source
 on:
   workflow_call:
 
-# These should be moved to a more manageble format, ex: a file in the repository that renovate can manage
 env:
   go: 1.18
-  yamlfmt: main # This should be moved to the next release tag when it is available, there is a bug in v0.11.0 that prevents it from working with the extension
-  yamlfmt_repo: google/yamlfmt
 
 jobs:
   build:
     name: Build yamlfmt binary
     runs-on: ubuntu-latest
     steps:
+
+    - name: Read External Repo
+      id: read-repo
+      run: |
+        VERSION=$(jq -r '.["github-releases"]["yamlfmt"]["repo"]' dependencies.json)
+        echo "::set-output name=YAMLFMT_REPO::$YAMLFMT_REPO"
+
+    - name: Read External Repo Version
+      id: read-version
+      run: |
+        VERSION=$(jq -r '.["github-releases"]["yamlfmt"]["version"]' dependencies.json)
+        echo "::set-output name=YAMLFMT_VERSION::$YAMLFMT_VERSION"
+
     - name: Checkout yamlfmt repo
       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       with:
         fetch-depth: 0
-        repository: ${{ env.yamlfmt_repo }}
-        ref: ${{ env.yamlfmt }}
+        repository: ${{ steps.read-repo.outputs.YAMLFMT_REPO }}
+        ref: ${{ steps.read-version.outputs.YAMLFMT_VERSION }}
 
     - name: Setup golang
       uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5
