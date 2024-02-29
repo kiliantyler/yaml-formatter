@@ -23,6 +23,12 @@ repos:
     stages: [commit-msg]
     args: []
 
+# This does not support the latest version of yamlfmt
+# - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
+#   rev: 0.2.3
+#   hooks:
+#   - id: yamlfmt
+
 - repo: https://github.com/adrienverge/yamllint.git
   rev: v1.35.1
   hooks:
