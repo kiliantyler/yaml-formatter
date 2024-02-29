@@ -30,8 +30,14 @@
       extractVersionTemplate: "{{#if extractVersion}}{{{extractVersion}}}{{else}}^v?(?<version>.*)${{/if}}",
     },
     {
+      "customType": "regex",
+      "description": "Process github-releases in dependencies.json",
       "fileMatch": ["^dependencies\\.json$"],
-      "managerPath": ".github/renovate/dependencies-manager.js"
-    }
+      "matchStrings": [
+        "\"github-releases\":\\s*{\\s*\"(?<depName>[^\\\"]+)\":\\s*{\\s*\"repo\":\\s*\"(?<lookupName>[^\\\"]+)\",\\s*\"version\":\\s*\"(?<currentValue>v[\\d.]+)\"\\s*}"
+      ],
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
+    },
   ],
 }

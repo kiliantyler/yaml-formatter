@@ -1,6 +1,8 @@
 {
-  "yamlfmt": {
-    "repo": "google/yamlfmt",
-    "version": "v0.10.0"
+  "github-releases": {
+    "yamlfmt": {
+      "repo": "google/yamlfmt",
+      "version": "v0.10.0"
+    }
   }
 }
