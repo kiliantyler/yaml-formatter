@@ -1,0 +1,14 @@
+changelog:
+  exclude:
+    labels:
+    - type/digest
+  categories:
+  - title: Major Updates
+    labels:
+    - type/major
+  - title: Minor Updates
+    labels:
+    - type/minor
+  - title: Other Changes
+    labels:
+    - "*"
