@@ -3,6 +3,16 @@
   "customManagers": [
     {
       "customType": "regex",
+      "description": "Process github-releases in dependencies.json",
+      "fileMatch": ["^dependencies\\.json$"],
+      "matchStrings": [
+        "\"github-releases\":\\s*{\\s*\"(?<depName>[^\\\"]+)\":\\s*{\\s*\"repo\":\\s*\"(?<lookupName>[^\\\"]+)\",\\s*\"version\":\\s*\"(?<currentValue>v[\\d.]+)\"\\s*}"
+      ],
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
       "description": "Process custom dependencies",
       "fileMatch": [
         "(^|/)ansible/.+\\.ya?ml(\\.j2)?$",
