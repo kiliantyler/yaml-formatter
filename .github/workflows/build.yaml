@@ -5,6 +5,7 @@ on:
 
 env:
   go: 1.18
+  repo_path: kubernetes-yaml-formatter-x
 
 jobs:
   build:
@@ -16,21 +17,22 @@ jobs:
       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       with:
         fetch-depth: 0
+        path: ${{ env.repo_path }}
 
     - name: Read External Repo
       id: read-repo
       run: |
-        VERSION=$(jq -r '.["github-releases"]["yamlfmt"]["repo"]' dependencies.json)
-        echo "::set-output name=YAMLFMT_REPO::$YAMLFMT_REPO"
+        YAMLFMT_REPO=$(jq -r '.["github-releases"]["yamlfmt"]["repo"]' ${repo_path}/dependencies.json)
+        echo "$YAMLFMT_REPO" >> "${GITHUB_OUTPUT}"
 
     - name: Read External Repo Version
       id: read-version
       run: |
-        VERSION=$(jq -r '.["github-releases"]["yamlfmt"]["version"]' dependencies.json)
-        echo "::set-output name=YAMLFMT_VERSION::$YAMLFMT_VERSION"
+        YAMLFMT_VERSION=$(jq -r '.["github-releases"]["yamlfmt"]["version"]' ${repo_path}/dependencies.json)
+        echo "$YAMLFMT_VERSION" >> "${GITHUB_OUTPUT}"
 
     - name: Cleanup repo
-      run: rm -rf *
+      run: rm -rf ${{ env.repo_path }}
 
     - name: Checkout yamlfmt repo
       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
