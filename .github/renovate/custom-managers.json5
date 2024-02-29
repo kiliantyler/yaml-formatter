@@ -29,5 +29,9 @@
       versioningTemplate: "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}",
       extractVersionTemplate: "{{#if extractVersion}}{{{extractVersion}}}{{else}}^v?(?<version>.*)${{/if}}",
     },
+    {
+      "fileMatch": ["^dependencies\\.json$"],
+      "managerPath": ".github/renovate/dependencies-manager.json5"
+    }
   ],
 }
