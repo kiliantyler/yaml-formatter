@@ -5,7 +5,6 @@ on:
 
 env:
   go: 1.18
-  repo_path: kubernetes-yaml-formatter-x
 
 jobs:
   build:
@@ -17,7 +16,6 @@ jobs:
       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       with:
         fetch-depth: 0
-        path: ${{ env.repo_path }}
 
     - name: Read External Repo
       id: read-repo
@@ -32,7 +30,7 @@ jobs:
         echo "::set-output name=YAMLFMT_VERSION::$YAMLFMT_VERSION"
 
     - name: Cleanup repo
-      run: rm -rf ${{ env.repo_path }}
+      run: rm -rf *
 
     - name: Checkout yamlfmt repo
       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
