@@ -23,13 +23,13 @@ jobs:
       id: read-repo
       run: |
         YAMLFMT_REPO=$(jq -r '.["github-releases"]["yamlfmt"]["repo"]' ${repo_path}/dependencies.json)
-        echo "$YAMLFMT_REPO" >> "${GITHUB_OUTPUT}"
+        echo "YAMLFMT_REPO=$YAMLFMT_REPO" >> "${GITHUB_OUTPUT}"
 
     - name: Read External Repo Version
       id: read-version
       run: |
         YAMLFMT_VERSION=$(jq -r '.["github-releases"]["yamlfmt"]["version"]' ${repo_path}/dependencies.json)
-        echo "$YAMLFMT_VERSION" >> "${GITHUB_OUTPUT}"
+        echo "YAMLFMT_VERSION=$YAMLFMT_VERSION" >> "${GITHUB_OUTPUT}"
 
     - name: Cleanup repo
       run: rm -rf ${{ env.repo_path }}
