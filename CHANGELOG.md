@@ -4,6 +4,12 @@ All notable changes to the "kubernetes-yaml-formatter-x" extension will be docum
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## 2.0.0 (29 Feb 2024)
+
+Ansible is now a targetable format!
+
+Also this exension will set itself as the default for ansible files the same way that it does for yaml. (You can disable this)
+
 ## 1.4.0 (29 Feb 2024)
 
 Hello from a day that doesn't exist!
