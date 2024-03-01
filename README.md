@@ -67,6 +67,19 @@ It makes format yaml on save default to `true`, you can disable it:
 }
 ```
 
+## Default Language settings
+
+```json
+"[yaml]": {
+  "editor.defaultFormatter": "kiliantyler.kubernetes-yaml-formatter-x",
+  "editor.formatOnSave": true
+},
+"[ansible]": {
+  "editor.defaultFormatter": "kiliantyler.kubernetes-yaml-formatter-x",
+  "editor.formatOnSave": true
+}
+```
+
 ## Config Precidence
 
 ```

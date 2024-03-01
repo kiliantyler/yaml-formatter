@@ -2,7 +2,7 @@
   "github-releases": {
     "yamlfmt": {
       "repo": "google/yamlfmt",
-      "version": "v0.11.0"
+      "version": "main"
     }
   }
 }
