@@ -25,8 +25,7 @@ jobs:
       id: set-list
       run: |
         FILES=$(find . -name "*.vsix" -exec basename {} \; | paste -sd "," -)
-        echo "FILES_LIST=$FILES" >> $GITHUB_ENV
-        echo "::set-output name=files::$FILES"
+        echo "files=$FILES" >> "${GITHUB_OUTPUT}"
 
     - name: Publish to GitHub Releases
       uses: softprops/action-gh-release@9d7c94cfd0a1f3ed45544c887983e9fa900f0564 # v2
