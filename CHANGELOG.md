@@ -4,6 +4,10 @@ All notable changes to the "kubernetes-yaml-formatter-x" extension will be docum
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## 2.1.0 (19 Mar 2024)
+
+Just some dependency bumps, keeping everything flowing.
+
 ## 2.0.0 (29 Feb 2024)
 
 Ansible is now a targetable format!

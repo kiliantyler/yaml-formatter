@@ -3,7 +3,7 @@
   "displayName": "Kubernetes YAML Formatter X",
   "icon": "images/icon.png",
   "description": "An even better YAML formatter for DevOps like Kubernetes, Ansible, CI/CD, etc.",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "publisher": "kiliantyler",
   "repository": {
     "url": "https://github.com/kiliantyler/kubernetes-yaml-formatter-x.git",
