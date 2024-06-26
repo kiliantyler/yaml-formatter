@@ -28,4 +28,5 @@
   "platformCommit": true,
   "assigneesFromCodeOwners": true,
   "forkProcessing": "enabled",
+  "lockFileMaintenance": true
 }
