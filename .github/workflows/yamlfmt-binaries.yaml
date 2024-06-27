@@ -13,17 +13,17 @@ jobs:
     name: Get yamlfmt binaries
     runs-on: ubuntu-latest
     steps:
-    - name: Get yamlfmt binaries from release, all platforms
-      uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4
+    - name: Download yamlfmt binaries from release
+      uses: robinraju/release-downloader@v1.10
       with:
-        pattern: yamlfmt_*
         repository: google/yamlfmt
+        tag: ${{ env.version }}
+        fileName: '*.tar.gz'
+        extract: true
+        token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: extract tar.gz
+    - name: list files
       run: |
-        for f in yamlfmt_*.tar.gz; do
-          tar -xzf $f
-        done
         ls -l
 
     # - name: upload yamlfmt as artifacts
