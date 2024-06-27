@@ -37,11 +37,9 @@ jobs:
         extract: true
         token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: list files
-      run: |
-        ls -l
-
-    # - name: upload yamlfmt as artifacts
-    #   uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4
-    #   with:
-    #     path: yamlfmt_${{ env.version }}
+    - name: upload yamlfmt as artifacts
+      uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4
+      with:
+        name: yamlfmt_${{ env.VERSION }}_${{ matrix.os }}
+        if-no-files-found: error
+        path: yamlfmt*
