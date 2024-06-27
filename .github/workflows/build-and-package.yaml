@@ -8,15 +8,31 @@ on:
     branches:
     - main
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'yamlfmt version'
+        type: string
+        #renovate: datasource=github-releases depName=google/yamlfmt
+        default: v0.13.0
   workflow_call:
+    inputs:
+      version:
+        description: 'yamlfmt version'
+        type: string
+        #renovate: datasource=github-releases depName=google/yamlfmt
+        default: v0.13.0
 
 jobs:
   binaries:
     name: Download yamlfmt binaries
     uses: ./.github/workflows/yamlfmt-binaries.yaml
+    with:
+      version: ${{ inputs.version }}
 
   package:
     name: package vscode extension
     needs: binaries
     if: success()
     uses: ./.github/workflows/package.yaml
+    with:
+      version: ${{ inputs.version }}
