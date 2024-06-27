@@ -11,12 +11,12 @@ on:
   workflow_call:
 
 jobs:
-  build:
-    name: Build yamlfmt
-    uses: ./.github/workflows/build.yaml
+  binaries:
+    name: Download yamlfmt binaries
+    uses: ./.github/workflows/yamlfmt-binaries.yaml
 
   package:
     name: package vscode extension
-    needs: build
+    needs: binaries
     if: success()
     uses: ./.github/workflows/package.yaml
