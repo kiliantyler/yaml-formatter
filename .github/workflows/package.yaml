@@ -72,7 +72,7 @@ jobs:
         fetch-depth: 0
 
     - name: Download yamlfmt binaries from release
-      uses: robinraju/release-downloader@v1.10
+      uses: robinraju/release-downloader@c39a3b234af58f0cf85888573d361fb6fa281534 # v1.10
       with:
         repository: google/yamlfmt
         tag: ${{ inputs.version }}
