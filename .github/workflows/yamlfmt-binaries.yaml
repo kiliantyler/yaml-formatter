@@ -29,7 +29,9 @@ jobs:
         fi
     - name: Strip v from version
       id: strip
-      run: echo "VERSION_NUM=${version/v/}" >> $GITHUB_OUTPUT
+      run: |
+        version=${{ inputs.version }}
+        echo "VERSION_NUM=${version/v/}" >> $GITHUB_OUTPUT
 
   build:
     name: Get yamlfmt binaries
