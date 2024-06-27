@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
 name: Full Release of Extension
 
 on:
@@ -8,7 +9,7 @@ on:
 jobs:
   build-and-package:
     name: Build and Package
-    uses: ./.github/workflows/build-and-package.yaml
+    uses: ./.github/workflows/package.yaml
 
   release:
     name: Publish VSCode Extension to Marketplace & Create GitHub Release
@@ -18,8 +19,6 @@ jobs:
     steps:
     - name: Grab artifacts (vsix files)
       uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4
-      with:
-        name: packages
 
     - name: Create list of vsix files
       id: set-list
