@@ -2,16 +2,38 @@ name: Gather yamlfmt binaries
 
 on:
   workflow_call:
+    inputs:
+      version:
+        description: 'yamlfmt version'
+        required: true
+        type: string
   workflow_dispatch:
-
-env:
-  # renovate: datasource=github-releases depName=google/yamlfmt
-  version: v0.13.0
+    inputs:
+      version:
+        description: 'yamlfmt version'
+        required: true
+        type: string
 
 jobs:
+  validations:
+    name: Validations
+    runs-on: ubuntu-latest
+    steps:
+    - name: Validate version string
+      run: |
+        if [[ ! ${{ inputs.version }} =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          echo "Invalid version string. Please provide a valid version string in the format v1.2.3"
+          exit 1
+        fi
+    - name: Strip v from version
+      run: echo "VERSION=${version/v/}" >> $GITHUB_ENV
+      env:
+        version: ${{ inputs.version }}
+
   build:
     name: Get yamlfmt binaries
     runs-on: ubuntu-latest
+    needs: validations
     strategy:
       fail-fast: false
       matrix:
@@ -25,14 +47,11 @@ jobs:
         - Windows_i386
         - Windows_x86_64
     steps:
-    - name: Strip v from version
-      run: echo "VERSION=${version/v/}" >> $GITHUB_ENV
-
     - name: Download yamlfmt binaries from release
       uses: robinraju/release-downloader@v1.10
       with:
         repository: google/yamlfmt
-        tag: ${{ env.version }}
+        tag: ${{ inputs.version }}
         fileName: 'yamlfmt_${{ env.VERSION }}_${{ matrix.os }}.tar.gz'
         extract: true
         token: ${{ secrets.GITHUB_TOKEN }}

@@ -2,18 +2,55 @@ name: Package vscode extension
 
 on:
   workflow_call:
+    inputs:
+      version:
+        description: 'yamlfmt version'
+        required: true
+        type: string
 
 env:
+  # TODO: Renovate node version to match the package version
   node_version: 20
 
 jobs:
+  validations:
+    name: Validations
+    runs-on: ubuntu-latest
+    steps:
+    - name: Validate version string
+      run: |
+        if [[ ! ${{ inputs.version }} =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          echo "Invalid version string. Please provide a valid version string in the format v1.2.3"
+          exit 1
+        fi
+    - name: Strip v from version
+      run: echo "VERSION=${version/v/}" >> $GITHUB_ENV
+      env:
+        version: ${{ inputs.version }}
+
   package:
     name: Package vscode extension
     runs-on: ubuntu-latest
+    needs: validations
+    strategy:
+      matrix:
+        os:
+        - os: win32-x64
+          bin: Windows_x86_64
+        - os: win32-arm64
+          bin: Windows_arm64
+        - os: linux-x64
+          bin: Linux_x86_64
+        - os: linux-arm64
+          bin: Linux_arm64
+        - os: darwin-x64
+          bin: Darwin_x86_64
+        - os: darwin-arm64
+          bin: Darwin_arm64
     steps:
     - uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4
       with:
-        name: binaries
+        name: yamlfmt_${{ env.VERSION }}_${{ matrix.os.bin }}
         path: /tmp
 
     - name: Checkout extension repo
@@ -32,20 +69,9 @@ jobs:
     - name: Package multi-platforms
       shell: bash
       run: |
-        declare -A map
-        map["win32-x64"]=windows_amd64_v1
-        map["win32-arm64"]=windows_arm64
-        map["linux-x64"]=linux_amd64_v1
-        map["linux-arm64"]=linux_arm64
-        map["darwin-x64"]=darwin_amd64_v1
-        map["darwin-arm64"]=darwin_arm64
-
-        for arch in ${!map[*]}; do
-          rm -rf bin/
-          mv "/tmp/yamlfmt_${map[$arch]}" bin/
-          chmod +x -R bin/
-          npx vsce package --target $arch
-        done
+        mv "/tmp/yamlfmt*" bin/
+        chmod +x -R bin/
+        npx vsce package --target ${{ matrix.os.os }}
 
     - name: Upload artifacts (vsix files)
       uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4
