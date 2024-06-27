@@ -1,12 +1,26 @@
 name: Package vscode extension
 
 on:
+  pull_request:
+    branches:
+    - main
+  push:
+    branches:
+    - main
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'yamlfmt version'
+        type: string
+        #renovate: datasource=github-releases depName=google/yamlfmt
+        default: v0.13.0
   workflow_call:
     inputs:
       version:
         description: 'yamlfmt version'
-        required: true
         type: string
+        #renovate: datasource=github-releases depName=google/yamlfmt
+        default: v0.13.0
 
 env:
   # TODO: Renovate node version to match the package version
@@ -51,15 +65,27 @@ jobs:
         - os: darwin-arm64
           bin: Darwin_arm64
     steps:
-    - uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4
-      with:
-        name: yamlfmt_${{ needs.validations.outputs.VERSION_NUM }}_${{ matrix.os.bin }}
-        path: /bin
-
     - name: Checkout extension repo
       uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
       with:
         fetch-depth: 0
+
+    - name: Download yamlfmt binaries from release
+      uses: robinraju/release-downloader@v1.10
+      with:
+        repository: google/yamlfmt
+        tag: ${{ inputs.version }}
+        fileName: 'yamlfmt_${{ needs.validations.outputs.VERSION_NUM }}_${{ matrix.os.bin }}.tar.gz'
+        extract: true
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Cleanup bin
+      run: |
+        rm -rf bin/
+        rm -rf yamlfmt_*.tar.gz
+        mkdir bin
+        mv yamlfmt* bin/
+        chmod +x -R bin/
 
     - name: Setup nodejs
       uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
@@ -71,9 +97,7 @@ jobs:
 
     - name: Package ${{ matrix.os.os }} extension
       shell: bash
-      run: |
-        chmod +x -R bin/
-        npx vsce package --target ${{ matrix.os.os }}
+      run: npx vsce package --target ${{ matrix.os.os }}
 
     - name: Upload artifacts (vsix files)
       uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4

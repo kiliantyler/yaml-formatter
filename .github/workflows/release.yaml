@@ -8,7 +8,7 @@ on:
 jobs:
   build-and-package:
     name: Build and Package
-    uses: ./.github/workflows/build-and-package.yaml
+    uses: ./.github/workflows/package.yaml
 
   release:
     name: Publish VSCode Extension to Marketplace & Create GitHub Release
