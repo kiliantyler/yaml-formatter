@@ -102,5 +102,4 @@ jobs:
     - name: Upload artifacts (vsix files)
       uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4
       with:
-        name: packages
         path: "*.vsix"
