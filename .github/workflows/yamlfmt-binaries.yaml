@@ -18,6 +18,8 @@ jobs:
   validations:
     name: Validations
     runs-on: ubuntu-latest
+    outputs:
+      VERSION_NUM: ${{ steps.strip.outputs.VERSION_NUM }}
     steps:
     - name: Validate version string
       run: |
@@ -26,9 +28,8 @@ jobs:
           exit 1
         fi
     - name: Strip v from version
-      run: echo "VERSION=${version/v/}" >> $GITHUB_ENV
-      env:
-        version: ${{ inputs.version }}
+      id: strip
+      run: echo "VERSION_NUM=${version/v/}" >> $GITHUB_OUTPUT
 
   build:
     name: Get yamlfmt binaries
@@ -52,13 +53,13 @@ jobs:
       with:
         repository: google/yamlfmt
         tag: ${{ inputs.version }}
-        fileName: 'yamlfmt_${{ env.VERSION }}_${{ matrix.os }}.tar.gz'
+        fileName: 'yamlfmt_${{ needs.validations.outputs.VERSION_NUM }}_${{ matrix.os }}.tar.gz'
         extract: true
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: upload yamlfmt as artifacts
       uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4
       with:
-        name: yamlfmt_${{ env.VERSION }}_${{ matrix.os }}
+        name: yamlfmt_${{ needs.validations.outputs.VERSION_NUM }}_${{ matrix.os }}
         if-no-files-found: error
         path: yamlfmt*
