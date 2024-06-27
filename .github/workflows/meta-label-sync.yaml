@@ -1,14 +1,20 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow
-name: Meta Sync labels
+name: "Meta - Label Sync"
 
 on:
   workflow_dispatch:
   push:
     branches: [main]
     paths: [.github/labels.yaml]
+  schedule:
+  - cron: "0 0 * * *" # Every day at midnight
+
+permissions:
+  issues: write
+
 jobs:
-  labels:
-    name: Sync Labels
+  label-sync:
+    name: Label Sync
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
