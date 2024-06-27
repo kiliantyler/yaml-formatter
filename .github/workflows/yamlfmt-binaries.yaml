@@ -12,13 +12,28 @@ jobs:
   build:
     name: Get yamlfmt binaries
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+        - Darwin_arm64
+        - Darwin_x86_64
+        - Linux_arm64
+        - Linux_i386
+        - Linux_x86_64
+        - Windows_arm64
+        - Windows_i386
+        - Windows_x86_64
     steps:
+    - name: Strip v from version
+      run: echo "VERSION=${version/v/}" >> $GITHUB_ENV
+
     - name: Download yamlfmt binaries from release
       uses: robinraju/release-downloader@v1.10
       with:
         repository: google/yamlfmt
         tag: ${{ env.version }}
-        fileName: '*.tar.gz'
+        fileName: 'yamlfmt_${{ env.VERSION }}_${{ matrix.os }}.tar.gz'
         extract: true
         token: ${{ secrets.GITHUB_TOKEN }}
 
