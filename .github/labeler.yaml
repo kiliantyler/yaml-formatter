@@ -1,15 +1,3 @@
 area/ansible:
 - changed-files:
   - any-glob-to-any-file: ansible/**/*
-area/github:
-- changed-files:
-  - any-glob-to-any-file: .github/**/*
-area/kubernetes:
-- changed-files:
-  - any-glob-to-any-file: kubernetes/**/*
-area/go-task:
-- changed-files:
-  - any-glob-to-any-file: .taskfiles/**/*
-area/terraform:
-- changed-files:
-  - any-glob-to-any-file: terraform/**/*
