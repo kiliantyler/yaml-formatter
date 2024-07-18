@@ -27,7 +27,7 @@ jobs:
         echo "files=$FILES" >> "${GITHUB_OUTPUT}"
 
     - name: Publish to GitHub Releases
-      uses: softprops/action-gh-release@fb2d03176f42a1f0dd433ca263f314051d3edd44 # v2
+      uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 # v2
       if: success() && startsWith(github.ref, 'refs/tags/')
       with:
         files: ${{ steps.set-list.outputs.files }}
